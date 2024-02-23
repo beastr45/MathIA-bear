@@ -1,3 +1,4 @@
+#script for generating unit circle vector rotation gifs
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -74,7 +75,7 @@ def update(frame):
 # Create a figure and axis
 fig, ax = plt.subplots()
 
-# Define the original vector
+# Define the original vector we choose 1,1 because it is simpler
 original_vector = np.array([1, 1])
 
 # Initialize history
