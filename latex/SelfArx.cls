@@ -62,7 +62,7 @@
 	right=2cm,
 	top=2.25cm,
 	bottom=2.25cm,
-	headheight=11pt,
+	headheight=21pt,
 	letterpaper,
 ]{geometry}
 
@@ -215,7 +215,7 @@
 \newcommand{\Archive}[1]{\def\@Archive{#1}}
 \newcommand{\Authors}[1]{\def\@Authors{#1}}
 \newcommand{\JournalInfo}[1]{\def\@JournalInfo{#1}}
-\newcommand{\Abstract}[1]{\def\@Abstract{#1}}
+% \newcommand{\Abstract}[1]{\def\@Abstract{#1}}
 \newcommand{\Keywords}[1]{\def\@Keywords{#1}}
 
 % ---------------------------------------------------------------------
@@ -230,25 +230,25 @@
 		\vskip10pt%
 		{\raggedright\color{color1}\sffamily\fontsize{12}{16}\selectfont \@Authors\par}%
 		\vskip18pt%
-		\fcolorbox{color1}{white}{%
-			\parbox{\textwidth-2\fboxsep-2\fboxrule}{\centering%
-				\colorbox{color2!10}{%
-					\parbox{\textwidth-4\fboxsep-2\fboxrule}{%
-						\ifx\@Keywords\@empty%
-							\sffamily\textbf{\abstractname}\\\@Abstract%
-						\else%
-							\sffamily\textbf{\abstractname}\\\@Abstract\\[4pt]%
-							\textbf{\keywordname}\\\@Keywords%
-						\fi%
-					}%
-				}%
-				\vskip4pt%
-				\begingroup%
-					\raggedright\sffamily\small%
-					\footnotesize\@affiliation\par%
-				\endgroup%%
-			}%
-		}%
+		% \fcolorbox{color1}{white}{%
+		% 	\parbox{\textwidth-2\fboxsep-2\fboxrule}{\centering%
+		% 		\colorbox{color2!10}{%
+		% 			\parbox{\textwidth-4\fboxsep-2\fboxrule}{%
+		% 				\ifx\@Keywords\@empty%
+		% 					\sffamily\textbf{\abstractname}\\\@Abstract%
+		% 				\else%
+		% 					\sffamily\textbf{\abstractname}\\\@Abstract\\[4pt]%
+		% 					\textbf{\keywordname}\\\@Keywords%
+		% 				\fi%
+		% 			}%
+		% 		}%
+		% 		\vskip4pt%
+		% 		\begingroup%
+		% 			\raggedright\sffamily\small%
+		% 			\footnotesize\@affiliation\par%
+		% 		\endgroup%%
+		% 	}%
+		% }%
 		\vskip25pt%
 	}]%
 }

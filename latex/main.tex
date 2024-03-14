@@ -14,6 +14,10 @@
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
+% {\setlength{\parindent}{0pt}
+% \begin{math}
+% \end{math}
+% }
 
 \documentclass[fleqn,10pt]{SelfArx} % Document font size and equations flushed left
 
@@ -22,6 +26,8 @@
 \usepackage{csquotes}
 \usepackage[style=ieee,backend=biber]{biblatex}
 \addbibresource{MathIA.bib}
+
+\usepackage{xcolor} % Required for specifying custom colours
 
 %----------------------------------------------------------------------------------------
 %	COLUMNS
@@ -36,6 +42,7 @@
 
 \definecolor{color1}{RGB}{0,0,90} % Color of the article title and sections
 \definecolor{color2}{RGB}{0,20,20} % Color of the boxes behind the abstract and headings
+\definecolor{grey}{rgb}{0.9,0.9,0.9} % Colour of the box surrounding the title
 
 %----------------------------------------------------------------------------------------
 %	HYPERLINKS
@@ -59,10 +66,10 @@
 %	ARTICLE INFORMATION
 %----------------------------------------------------------------------------------------
 
-\JournalInfo{Analysis and Approaches, Collis, 2024} % Journal information
+\JournalInfo{Published 2024} % Journal information
 \Archive{} % Additional notes (e.g. copyright, DOI, review/research article)
 
-\PaperTitle{Math IA 2024\\Rotation Using Matrix Math} % Article title
+\PaperTitle{Rotation Using Matrix Math} % Article title
 
 \Authors{Bear BlinSchauer} % Authors
 
@@ -75,11 +82,49 @@
 %	ABSTRACT
 %----------------------------------------------------------------------------------------
 
-\Abstract{abstract goes here.}
+% \Abstract{abstract goes here.}
 
 %----------------------------------------------------------------------------------------
 
 \begin{document}
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	%------------------------------------------------
+	%	Grey title box
+	%------------------------------------------------
+\colorbox{grey}{
+	\parbox[t]{0.93\textwidth}{ % Outer full width box
+		\parbox[t]{0.91\textwidth}{ % Inner box for inner right text margin
+			\raggedleft % Right align the text
+			\fontsize{20pt}{30pt}\selectfont % Title font size, the first argument is the font size and the second is the line spacing, adjust depending on title length
+			\vspace{0.7cm} % Space between the start of the title and the top of the grey box
+			\color{color1}\sffamily\bfseries
+			IB Analysis and Approaches\\
+			Math Internal Assesment\\
+			Year Two\\
+			\vspace{0.7cm} % Space between the end of the title and the bottom of the grey box
+		}
+	}
+}
+	\vspace{-0.5\baselineskip} % Adjust the vertical space between the grey box and the image
+	% \begin{figure*}[ht] % Using \begin{figure*} makes the figure take up the entire width of the page
+		\raggedleft % Right align the text
+		\includegraphics[width=0.95\textwidth]{cubesTessalation.jpg}
+	% 	\label{fig:view}
+	% \end{figure*s
+	\vfill % Space between the title box and author information
+	%------------------------------------------------
+	%	Author name and information
+	%------------------------------------------------
+	\parbox[t]{0.93\textwidth}{ % Box to inset this section slightly
+		\raggedleft % Right align the text
+		\large % Increase the font size
+		{\Large Bear BlinSchauer}\\[4pt] % Extra space after name
+		Analysis and Approaches student\\
+		Roosevelt High 2024\\[4pt] % Extra space before URL
+		\hfill\rule{0.2\linewidth}{1pt}% Horizontal line, first argument width, second thickness
+	}
+\end{titlepage}
 
 \maketitle % Output the title and abstract box
 
@@ -94,22 +139,70 @@
 
 \addcontentsline{toc}{section}{Introduction} % Adds this section to the table of contents
 
-\hspace{\parindent}
-IB often pushes people to create projects that connect to their personal life or interests. As an individual I am fascinated by 3d graphics and research the topic on my own time. I think that mathematical applications in computer graphics is a fascinating part of both computer science and math. The idea that math is able to describe entire virtual environments is incredible. There is a multitude of different parts of math used in 3d graphics but in this essay I will research vectors and rotational transformation.
+\hspace{\parindent}%tab
+As an individual, I am fascinated by 3d graphics and research the topic on my own time. Mathematical applications in computer graphics is a fascinating part of both computer science and math. The idea that math is able to describe entire virtual environments is remarkable. Among other important mathematical concepts, vectors and rotational transformations play a crucial role in the positioning of objects in three-dimensional spaces.
 
-Often while trying to learn graphics I get roadblocked by rotation vectors and the triginometry inside the function appears intimidating. In this math Internal Assesment I decided to learn how rotation matrices work using the unit circle and implement the algorithm into a simple program that rotates a triangle 3-dimensionally. This essay will connect to triginometry because I will utilize basic triginometry to reason vector composition and I will use the unit circle in order to visualize rotation.
+%Often while trying to learn 3d graphics I get roadblocked by rotation vectors and the trigonometry inside the function appears intimidating.
+Although there are alternative systems of rotation that avoid problems such as Gimbal Lock, in this math Internal Assessment I decided to use rotation matrices and learn how they work using the unit circle. I decided to focus on rotation matrices because they allow us to use Euler angles and build up important knowledge of linear algebra. Knowing how these systems work is important because it allows the individual to make an end product more intuitively and to work in 3d space without any help or helper libraries.
 
-This essay connects to personal acedemic ventures of mine. As a side project I wish to write a renderer on my computer. I believe that it is important as a learner to understand how to make transformations in three dimensional space because it allows the individual to make an end product more intuitively and to work in 3d space without any help or helper libraries.
-
-In this project I hope to write about the proccess of triginometry applied to rotation in three dimensional space. During this project I will be writing a program applying the math with the end goal of getting a triangle to rotate in 3d space on my screen.\\
-\begin{math}
-\overset{\rightarrow}{v}=\begin{bmatrix} x \\ y \end{bmatrix}
-\end{math}
+This assessment will connect to trigonometry. I will utilize basic trigonometry to reason vector composition, and I will use the unit circle in order to visualize vector rotation. In order to break down the task, I will divide the problem into smaller, more manageable problems that build on each other. Not only will I explain the math behind these methods of rotation, but I will also use math I already know to implement the rotational algorithms in C++ and JavaScript on my own. During this project, I will be writing multiple visualization programs, making GIF's 
+\footnote{gifs are represented as image urls pointing to the animated gif, this is because free pdf viewers like firefox dont support most pdf animations and scripting}
+of that demonstrate the math I learn.  The final project that I will produce will be a simple program rotating a triangle in 3d space.
 
 \section{Problem}
 % \addcontentsline{toc}{section}{Problem} % Adds this section to the table of contents
 
+\hspace{\parindent}%tab
+The problem for the math internal assessment is as follows. I need to derive a method to create rotations in three-dimensional space by using trigonometry and basic linear algebra.
 
+This problem is very important to everyday life powering many aspects of video games, CAD, and complex milling. The problem with rotation has an elegant system of solutions that builds up to more complicated and important problems.
+
+Trigonometry (the study of angles) is integral in the rotation process. In rotation matrices, trigonometric functions are used in order to calculate rotation and position. Trigonometry is also utilized to more generally in linear algebra in order to calculate the angle and position of resultant vectors, which is integral to the process.
+
+\section{Math}
+
+\hspace{\parindent}%tab
+NOT FINALIZED
+
+% Coming to a conclusion on how to represent a three dimensional rotation using triginometry is a complex task so 
+In order to make the layout of this document easier to understand the math section will be broken into smaller chunks of a larger recipe. Eventually we will make a working demo in open Gl or three.js, but before we compute beautiful rotations I will have to clear the air on the math behind the magic and the process I used to find it first.
+
+% \paragraph*{Parts:}
+% \begin{enumerate}[noitemsep] % [noitemsep] removes whitespace between the items for a compact look
+% 	\item Defining 2d transformation
+% 	\item Apply trigonometry in order to transform things rotationally.
+% 	\item Applying rotation in 3d
+% 	\item Multiplying matrices in 2d and then 3d in order to get combined pitch yaw roll rotations on new axis.
+% 	\item Implementing 3d rotation on objects using a graphics library.
+% \end{enumerate}
+
+\subsection{Defining 2d Transformation}
+\hspace{\parindent}%tab
+In order to understand 3d rotation It would be much simpler to start with simpler problems such as transforming objects in 2d space. Part one will explore how to actually get 2d vectors to move.
+
+To start making vectors move, we should first define what a vector is. Different areas of math define vectors differently, such as physics, who define vectors as a scalar with an angle attached to it. In a mathematical point of view, a vector can be represented in a diversity of formats. Since matrix operations will be performed on the vector in this context the vector is defined as a matrix that defines coordinates in space pointing away from the origin. Essentially, this vector is a matrix that contains two perpendicular vectors that add up to the final vector.
+
+\begin{equation} \vec{v} = \begin{bmatrix} x \ y \end{bmatrix} \end{equation}
+
+% \begin{math}
+% 	\vec{v}=\begin{bmatrix} x \\ y \end{bmatrix}
+% \end{math}
+
+In order to construct the vector from the two coordinates, we can use trigonometry to find the angle of the vector and the Pythagorean theorem to find its magnitude.
+
+\begin{align} \theta &= \arctan\left(\frac{y}{x}\right) & \lvert \vec{v} \rvert = \sqrt{x^2 + y^2} \end{align}
+
+% {\setlength{\parindent}{0pt}
+% \begin{math}
+% 	 \theta = \arctan\left(\frac{y}{x}\right)
+% \end{math}
+% }
+% \vspace{10pt}%tab
+% {\setlength{\parindent}{0pt}
+% \begin{math}
+% 	 \lvert \vec{v} \rvert = \sqrt{x^2+y^2}
+% \end{math}
+% }
 % \href{http://www.google.de}{\includegraphics[width=\linewidth]{view}}% [1]
 %adobe sucks just give up and link to raw github content
 % \animategraphics[scale=0.4,loop,autoplay]{30}{Figures/monkeyRotation/foo-}{0}{99}
@@ -120,7 +213,6 @@ In this project I hope to write about the proccess of triginometry applied to ro
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
 %----------------------------------------------------------------------------------------
-\autocite{dr_peyam_rotation_2019}
 \phantomsection
 \nocite{*}
 \begin{flushleft}
