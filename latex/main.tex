@@ -24,7 +24,7 @@
 \usepackage[english]{babel} % Specify a different language here - english by default
 \usepackage {graphicx, animate}
 \usepackage{csquotes}
-\usepackage[style=ieee,backend=biber]{biblatex}
+\usepackage[style=apa,backend=biber]{biblatex}
 \addbibresource{MathIA.bib}
 
 \usepackage{xcolor} % Required for specifying custom colours
@@ -71,7 +71,7 @@
 
 \PaperTitle{Rotation Using Matrix Math} % Article title
 
-\Authors{Bear BlinSchauer} % Authors
+\Authors{Author placeholder} % Authors
 
 \Keywords{} % Keywords - if you don't want any simply remove all the text between the curly brackets
 \newcommand{\keywordname}{Keywords} % Defines the keywords heading name
@@ -119,7 +119,7 @@
 	\parbox[t]{0.93\textwidth}{ % Box to inset this section slightly
 		\raggedleft % Right align the text
 		\large % Increase the font size
-		{\Large Bear BlinSchauer}\\[4pt] % Extra space after name
+		{\Large Author Placeholder}\\[4pt] % Extra space after name
 		Analysis and Approaches student\\
 		Roosevelt High 2024\\[4pt] % Extra space before URL
 		\hfill\rule{0.2\linewidth}{1pt}% Horizontal line, first argument width, second thickness
@@ -146,8 +146,8 @@ As an individual, I am fascinated by 3d graphics and research the topic on my ow
 Although there are alternative systems of rotation that avoid problems such as Gimbal Lock, in this math Internal Assessment I decided to use rotation matrices and learn how they work using the unit circle. I decided to focus on rotation matrices because they allow us to use Euler angles and build up important knowledge of linear algebra. Knowing how these systems work is important because it allows the individual to make an end product more intuitively and to work in 3d space without any help or helper libraries.
 
 This assessment will connect to trigonometry. I will utilize basic trigonometry to reason vector composition, and I will use the unit circle in order to visualize vector rotation. In order to break down the task, I will divide the problem into smaller, more manageable problems that build on each other. Not only will I explain the math behind these methods of rotation, but I will also use math I already know to implement the rotational algorithms in C++ and JavaScript on my own. During this project, I will be writing multiple visualization programs, making GIF's 
-\footnote{gifs are represented as image urls pointing to the animated gif, this is because free pdf viewers like firefox dont support most pdf animations and scripting}
-of that demonstrate the math I learn.  The final project that I will produce will be a simple program rotating a triangle in 3d space.
+\footnote{Note on animations: gifs are represented as image urls pointing to an animated gif, this is because free pdf viewers like firefox dont support most pdf animations and scripting. IB auditors may be disalowed from resolving image get requests due to software limitations. In this case a description will be added in the margins.}
+ that demonstrate the math I learn.  The final project that I will produce will be a simple program rotating a triangle in 3d space.
 
 \section{Problem}
 % \addcontentsline{toc}{section}{Problem} % Adds this section to the table of contents
@@ -162,8 +162,6 @@ Trigonometry (the study of angles) is integral in the rotation process. In rotat
 \section{Math}
 
 \hspace{\parindent}%tab
-NOT FINALIZED
-
 % Coming to a conclusion on how to represent a three dimensional rotation using triginometry is a complex task so 
 In order to make the layout of this document easier to understand the math section will be broken into smaller chunks of a larger recipe. Eventually we will make a working demo in open Gl or three.js, but before we compute beautiful rotations I will have to clear the air on the math behind the magic and the process I used to find it first.
 
@@ -182,7 +180,7 @@ In order to understand 3d rotation It would be much simpler to start with simple
 
 To start making vectors move, we should first define what a vector is. Different areas of math define vectors differently, such as physics, who define vectors as a scalar with an angle attached to it. In a mathematical point of view, a vector can be represented in a diversity of formats. Since matrix operations will be performed on the vector in this context the vector is defined as a matrix that defines coordinates in space pointing away from the origin. Essentially, this vector is a matrix that contains two perpendicular vectors that add up to the final vector.
 
-\begin{equation} \vec{v} = \begin{bmatrix} x \ y \end{bmatrix} \end{equation}
+\begin{equation} \vec{v} = \begin{bmatrix} x \\ y \end{bmatrix} \end{equation}
 
 % \begin{math}
 % 	\vec{v}=\begin{bmatrix} x \\ y \end{bmatrix}
@@ -191,6 +189,51 @@ To start making vectors move, we should first define what a vector is. Different
 In order to construct the vector from the two coordinates, we can use trigonometry to find the angle of the vector and the Pythagorean theorem to find its magnitude.
 
 \begin{align} \theta &= \arctan\left(\frac{y}{x}\right) & \lvert \vec{v} \rvert = \sqrt{x^2 + y^2} \end{align}
+
+In order to add two vectors together, the resulting vector is the x components added together and the y components added together. By adding two vectors and multiplying either by a scalar, the base vectors will be able to represent any other vector in 2d space as long as they don’t have the same angle. These two vectors would represent the axis of the resulting vector. We say that these two vectors have a range of all two-dimensional space.
+\begin{align}\label{eq2}
+	\vec{s}&=\left[\begin{array}{llllllllll}x_1+x_2 \\y_1+y_2\end{array}\right] &
+	\vec{v}=x*\vec{i}+y*\vec{j}
+\end{align}
+
+The basis vectors are denoted by i and j. Any vector can be represented as a combination of these. By default, the basis vectors on the xy plane are simply scaled as one to make math more sensible. i and j are perpendicular and not rotated because the coordinates on a graph are typically vertical and horizontal.
+
+\begin{equation}
+	\overset{\wedge}{i}=\begin{bmatrix} 1\\0 \end{bmatrix} \overset{\wedge}{j}=\begin{bmatrix} 0\\1 \end{bmatrix}
+\end{equation}
+
+
+The basis vectors give us one of the fundamental ideas in transformation linear algebra where any vector can be written as two scalars scaling two basis vectors. Basis vectors are similar to the unit circle in trigonometry. If the coordinates of the basis vectors change, the resulting plane of 2d space the basis vectors represent will also change. 
+
+What we have learned is revolutionary, in order to change any set of vectors we can instead change the coordinates of the basis vectors and then apply the new basis vectors to all vectors we want to change. In order to denote a transformation like this, we can represent the transformation as a matrix represented by t. Here, the matrix is made up of vectors i and j. In order to apply the transformation, we multiply the transformation matrix by the vector we want to transform. 
+\begin{equation}T=\begin{bmatrix} i_{x} & j_{x} \\ i_{y} & j_{y} \end{bmatrix}\end{equation}
+In this way we can apply intuition in order to define a simple algorithm of multiplying a matrix by a vector.
+\begin{equation}\begin{bmatrix} a & b \\ c & d \end{bmatrix}\begin{bmatrix} x \\ y \end{bmatrix} = x\begin{bmatrix}  a \\ c \end{bmatrix} + y\begin{bmatrix} b \\ d \end{bmatrix} = \begin{bmatrix} ax+by \\ cx+dy \end{bmatrix}\end{equation}
+% Note above equation is essentially equation \ref{eq2} but represented as matrices instead of letters with arrows on top of them. Knowing how to transform 2d vectors like this is really useful and the same transformations can be adapted for 3d space.
+
+\subsection{Triginometry and Rotation}
+Simply scaling the basis vectors allows the user to scale and shear, which is really useful but not our ultimate goal. In order to rotate the vectors, we will need to rotate the axis using the unit circle. The unit circle is represented as a circle with radius one. In order to calculate trigonometry values, a point along the unit circle is used. This point consists of two numbers less than one. In the unit circle, the x coordinate of the point is the cosine and the y coordinate is the sine. Together, the sine and cosine coordinate represent a normalized vector of length one. These types of vectors are called unit vectors and solely represent an angle.
+
+\begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
+	\includegraphics[width=\columnwidth]{images/unitCircle.png}
+	\caption{The Unit Vector}
+	\label{fig:unitVec}
+\end{figure}
+
+By using our knowledge about the relevance of unit circles, it is simple to assume that one can simply scale the basis vectors by sine and cosine. Astute mathematicians will start to notice flaws in this plan. For example the magnitude of rotated vector $\vec{v}=\begin{bmatrix}1\\1\end{bmatrix}$ will not preserve its magnitude and will have a magnitude of 1 instead of $\sqrt{2}$ With further investigation, this approach doesn't work. Some transformation similar to rotation is gained, but the magnitude is not preserved. When transforming images, it is apparent the unintended stretching of the x-axis and y-axis causes the image to appear distorted. 
+
+
+\begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
+\begin{tabular}{ c c }
+	\includegraphics[width=\columnwidth/2]{images/VectorT1-24.jpg} & \includegraphics[width=\columnwidth/2]{images/VectorT1Fail-30.jpg}
+ % cell1 & cell2 \\
+ % cell4 & cell5 \\
+\end{tabular}
+	\caption{With symmetrical vectors rotation appears normal but with vectors where y dosent equal x it is apparent stretching occurs.}
+	\label{fig:exGifs}
+\end{figure}
+
+
 
 % {\setlength{\parindent}{0pt}
 % \begin{math}
@@ -203,7 +246,8 @@ In order to construct the vector from the two coordinates, we can use trigonomet
 % 	 \lvert \vec{v} \rvert = \sqrt{x^2+y^2}
 % \end{math}
 % }
-% \href{http://www.google.de}{\includegraphics[width=\linewidth]{view}}% [1]
+% \href{http://www.google.de}{\includegraphics[width=\linewidth]{ unitCircle.png}}
+% \includegraphics[width=\linewidth]{images/unitCircle.png}
 %adobe sucks just give up and link to raw github content
 % \animategraphics[scale=0.4,loop,autoplay]{30}{Figures/monkeyRotation/foo-}{0}{99}
 % \noindent\animategraphics[scale=0.9,controls,step]{0}{animate}{}{}
@@ -221,6 +265,8 @@ In order to construct the vector from the two coordinates, we can use trigonomet
 % \printbibliography
 % \bibliographystyle{unsrt}
 % \bibliography{MathIA.bib}
+%
+\textcolor{red}{41 75 74 68 6F 72 3A 20 42 65 61 72 20 42 6C 69 6E 53 63 68 61 75 65 72}
 
 %----------------------------------------------------------------------------------------
 
