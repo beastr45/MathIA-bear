@@ -23,7 +23,7 @@ scene.add(light);
 const loader = new GLTFLoader();
 let monkey; // Declare monkey outside loader callback for scope
 
-loader.load('assets/untitled.glb', function (gltf) {
+loader.load('assets/human.glb', function (gltf) {
     monkey = gltf.scene;
     scene.add(monkey);
 
@@ -43,6 +43,7 @@ camera.position.z = 8;
 const myMatrix = new THREE.Matrix4();
 const clock = new THREE.Clock();
 
+
 function animate() {
     // Get the elapsed time since the last frame
     const deltaTime = clock.getDelta();
@@ -54,15 +55,32 @@ function animate() {
 
     const rotationAngle = deltaTime * rotationSpeed;
     myMatrix.set(
-        Math.cos(rotationAngle),  0, Math.sin(rotationAngle), 0,   // Row 1
-        0, Math.cos(rotationAngle), -Math.sin(rotationAngle), 0,                                                // Row 2
-        -Math.sin(rotationAngle), Math.sin(rotationAngle), Math.cos(rotationAngle), 0,  // Row 3
+        Math.cos(rotationAngle),  -Math.sin(rotationAngle), 0 , 0,   // Row 1
+        Math.sin(rotationAngle), Math.cos(rotationAngle), 0, 0,  // Row 2
+        0, 0, 1, 0,                                                // Row 3
         0, 0, 0, 1                                                 // Row 4
     );
 
-    if (monkey) {
-        monkey.applyMatrix4(myMatrix);
-    }
+    // monkey.applyMatrix4(myMatrix);
+
+    // myMatrix.set(
+    //     1,  0, 0 , 0,   // Row 1
+    //     0, Math.cos(rotationAngle), -Math.sin(rotationAngle), 0,  // Row 2
+    //     0, Math.sin(rotationAngle), Math.cos(rotationAngle), 0,                                                // Row 3
+    //     0, 0, 0, 1                                                 // Row 4
+    // );
+    //
+    // monkey.applyMatrix4(myMatrix);
+
+    myMatrix.set(
+        Math.cos(rotationAngle),  0, -Math.sin(rotationAngle) , 0,   // Row 1
+        0, 1, 0, 0,  // Row 2
+        Math.sin(rotationAngle),0 , Math.cos(rotationAngle), 0,                                                // Row 3
+        0, 0, 0, 1                                                 // Row 4
+    );
+
+    monkey.applyMatrix4(myMatrix);
+    monkey.scale.set(3,3,3);
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);

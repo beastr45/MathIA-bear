@@ -71,7 +71,7 @@
 
 \PaperTitle{Rotation Using Matrix Math} % Article title
 
-\Authors{Author placeholder} % Authors
+\Authors{Name placeholder} % Authors
 
 \Keywords{} % Keywords - if you don't want any simply remove all the text between the curly brackets
 \newcommand{\keywordname}{Keywords} % Defines the keywords heading name
@@ -119,7 +119,7 @@
 	\parbox[t]{0.93\textwidth}{ % Box to inset this section slightly
 		\raggedleft % Right align the text
 		\large % Increase the font size
-		{\Large Author Placeholder}\\[4pt] % Extra space after name
+		{\Large Name Placeholder}\\[4pt] % Extra space after name
 		Analysis and Approaches student\\
 		Roosevelt High 2024\\[4pt] % Extra space before URL
 		\hfill\rule{0.2\linewidth}{1pt}% Horizontal line, first argument width, second thickness
@@ -212,6 +212,7 @@ In this way we can apply intuition in order to define a simple algorithm of mult
 % Note above equation is essentially equation \ref{eq2} but represented as matrices instead of letters with arrows on top of them. Knowing how to transform 2d vectors like this is really useful and the same transformations can be adapted for 3d space.
 
 \subsection{Triginometry and Rotation}
+\hspace{\parindent}%tab
 Simply scaling the basis vectors allows the user to scale and shear, which is really useful but not our ultimate goal. In order to rotate the vectors, we will need to rotate the axis using the unit circle. The unit circle is represented as a circle with radius one. In order to calculate trigonometry values, a point along the unit circle is used. This point consists of two numbers less than one. In the unit circle, the x coordinate of the point is the cosine and the y coordinate is the sine. Together, the sine and cosine coordinate represent a normalized vector of length one. These types of vectors are called unit vectors and solely represent an angle.
 
 \begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
@@ -220,12 +221,12 @@ Simply scaling the basis vectors allows the user to scale and shear, which is re
 	\label{fig:unitVec}
 \end{figure}
 
-By using our knowledge about the relevance of unit circles, it is simple to assume that one can simply scale the basis vectors by sine and cosine. Astute mathematicians will start to notice flaws in this plan. For example the magnitude of rotated vector $\vec{v}=\begin{bmatrix}1\\1\end{bmatrix}$ will not preserve its magnitude and will have a magnitude of 1 instead of $\sqrt{2}$ With further investigation, this approach doesn't work. Some transformation similar to rotation is gained, but the magnitude is not preserved. When transforming images, it is apparent the unintended stretching of the x-axis and y-axis causes the image to appear distorted. 
+By using our knowledge about the relevance of unit circles, it is simple to assume that one can simply scale the basis vectors by sine and cosine. Astute mathematicians will start to notice flaws in this plan. For example the magnitude of rotated vector $\vec{v}=\begin{bmatrix}1\\1\end{bmatrix}$ will not preserve its magnitude and will have a magnitude of 1 instead of $\sqrt{2}$. With further investigation, this approach doesn't work. Some transformation similar to rotation is gained, but the magnitude is not preserved. When transforming images, it is apparent the unintended stretching of the x-axis and y-axis causes the image to appear distorted. In order to visualize the transformations in in effect animations were made below.
 
 
 \begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
 \begin{tabular}{ c c }
-	\includegraphics[width=\columnwidth/2]{images/VectorT1-24.jpg} & \includegraphics[width=\columnwidth/2]{images/VectorT1Fail-30.jpg}
+	\href{https://raw.githubusercontent.com/beastr45/MathIA-bear/main/latex/Figures/images/gifs/VectorT1.gif}{\includegraphics[width=\columnwidth/4]{images/VectorT1-24.jpg}} & \href{https://raw.githubusercontent.com/beastr45/MathIA-bear/main/latex/Figures/images/gifs/VectorT1Fail.gif}{\includegraphics[width=\columnwidth/4]{images/VectorT1Fail-30.jpg}}
  % cell1 & cell2 \\
  % cell4 & cell5 \\
 \end{tabular}
@@ -233,7 +234,80 @@ By using our knowledge about the relevance of unit circles, it is simple to assu
 	\label{fig:exGifs}
 \end{figure}
 
+In order to transform a vector, we will instead take the unit vectors themselves rotate them across the unit circle. In order to do this we can apply the same type of transformation that we tried earlier to the base vectors instead of the resulting vector. We are now essentially making two transformations, one transforming all the basis vectors by theta and the other multiplying the rotated basis vectors with the vector we want to transform. This system prevents a change in magnitude of the vector that we want to transform.
 
+\begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
+\begin{tabular}{ c c }
+	\href{https://raw.githubusercontent.com/beastr45/MathIA-bear/main/latex/Figures/images/gifs/rotFailMonkey.gif}{\includegraphics[width=\columnwidth/4]{images/rotFailMonkey-33.jpg}} & \href{https://raw.githubusercontent.com/beastr45/MathIA-bear/main/latex/Figures/images/gifs/monkeyRotation.gif}{\includegraphics[width=\columnwidth/4]{images/monkeyRotation-78.jpg}}
+ % cell1 & cell2 \\
+ % cell4 & cell5 \\
+\end{tabular}
+	\caption{With a monkey refrence it is clear of the benefits of an absence of stretching/shearing}
+	\label{fig:monkeyGif}
+\end{figure}
+
+In order to transform a basis vector by theta we set the components of the basis vector to be sine and cosine. Since j is on the y-axis sine and cosine are flipped with sine being negative. This is simply due to the fact that the initial orientation of the transformation is itself 90 degrees from the x-axis. This process is visualized below. 
+
+\begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
+	\includegraphics[width=\columnwidth]{images/GeogebraVis.png}
+	\caption{The effect of the transformations on the basis vectors is illustrated.}
+	\label{fig:TransformationDiagram}
+\end{figure}
+
+by using the coordinates of i and j the rotation matrix can be defined as follows
+
+\begin{equation}
+	\begin{bmatrix} \cos{\theta} & -\sin{\theta} \\ \sin{\theta} & \cos{\theta} \end{bmatrix}\begin{bmatrix} x \\ y \end{bmatrix} = \vec{v^{\prime}}
+\end{equation}
+
+\subsection{3d Rotation}
+\hspace{\parindent}%tab
+Now that we have a better way to represent 3d rotation, we can apply it to 3d. The same idea that transformation matrices is a collection of basis vectors still works in the third dimension. 
+
+In 3d space, when we want to rotate things with rotation matrices, we can only rotate in one direction at a time. So in our rotation matrix, we can avoid the axis that is being rotated around and treat the problem the same way as 2d rotation. In the rotation matrix you can see the basis vector in the axis of rotation is not affected and the components of the basis vectors that do transform ignore change in that same axis.
+
+\begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
+	\includegraphics[height=\columnwidth/2]{images/matrixRef.png}
+	\caption{3-dimensional rotation matrices}
+	\label{fig:3dTransformationDiagram}
+\end{figure}
+
+In order to get a more complex rotation, the rotation matrices x y and z can be multiplied together. When multiplying matrices the order matters, a rotation over y-axis and z axis will produce a different vector than a rotation in the z axis and then y-axis. It is also important to note that rotating in three axis will result in unpredictable behavior when the rotation axis line up. This is called gimbal lock.
+
+\subsection{Graphics Implementation}
+\hspace{\parindent}%tab
+The most important part of the math IA is the implementation of rotation algorithms into real world application because it demonstrates that the IB student is capable in their understanding of the topic. The implementation shows the student did math and gives meaning to the internal assessment instead of having it be conductive of meaningless research. In this math Internal Assessment rotations have a very practical and tangible use in computer graphics. 
+
+Rotation matrices are used in computer graphics in order to calculate movement and shading. Initially an variety of ideas were proposed in order to demonstrate the topic. Lots of mediums can be used to transform 3d objects such as Desmos or Open Gl but more complex implementations were cut due to complexity and lack of time. To get started implementing rotation matrices the three.js library is used in order to render the required images.
+
+3d files contain a series of vectors connected together. In order to render a 3d file we can just put the x and y coordinates on a plane excluding the z coordinates. In order to remove the z coordinates a system called projection scales vectors farther away of the z axis giving the illusion of depth. In this case three.js takes care of this.
+
+\begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
+	\includegraphics[width=\columnwidth/2]{images/TinyrenderSkull.png}
+	\caption{Tiny render demo: Isometric model rendered excluding depth}
+	\label{fig:wireframe}
+\end{figure}
+
+This works well but in order to rotate an object we will need to perform a rotation to each of the vertices before the redundant axis is removed. In order to do this in the code our computer will make matrix transformations on each vector in the 3d file and then project it onto our screen.
+
+In order to simulate three-dimensional rotation a program was written in order to apply the rotation matrices to every vertex in a 3d file, demonstrating in practice how rotation matrices would be utilized in the industry.
+\begin{figure}[ht]\centering % Using \begin{figure*} makes the figure take up the entire width of the page
+\begin{tabular}{ p{0.45\columnwidth} p{0.45\columnwidth} }
+	\href{https://raw.githubusercontent.com/beastr45/MathIA-bear/main/latex/Figures/images/gifs/humanRotate.gif}{\includegraphics[width=\columnwidth/3]{images/humanRotate-38.jpg}} & \href{https://raw.githubusercontent.com/beastr45/MathIA-bear/main/latex/Figures/images/gifs/humanRotate.gif}{\includegraphics[width=\columnwidth/3]{images/humanRotate-46.jpg}}
+ % cell1 & cell2 \\
+ % cell4 & cell5 \\
+\end{tabular}
+	\caption{Demo of a model rotating using matrix math.}
+	\label{fig:humanGif}
+\end{figure}
+\section{Conclusion}
+\hspace{\parindent}%tab
+In while rotation matrices initially appear complex, the trigonometry behind it connects heavily to the unit circle we learned about in class. Knowing the fundamental math ideas behind transformations gives us the tools in order to construct a better mathematical system to interact with 3d and 2d space. Rotational transformations are not just useful for their academic benefit and form a great deal of importance due to their relevance in computer graphics. 
+\section{Reflection}
+\hspace{\parindent}%tab
+Even though 3d math is really complicated, it is also very fascinating to learn about. This math IA is part of a larger project of mine where I try to build a 3d renderer from scratch. Although I haven't really thought too far into my extended essay. I think that as an extension to the topic I might make this IA part of my larger extended essay. 
+
+It's a bummer I didn’t get to focus more on the actual computer science implementation of rotation very much because the implementation was the step I was most excited for while choosing my math IA. Overall I just didn’t have enough time and the other parts of the graphics pipeline I would have to implement first would make the project super complex. It is better that I didn’t focus my math IA less ma-thy things because although fascinating to a mathematician It would most likely not make very much sense to the reader.
 
 % {\setlength{\parindent}{0pt}
 % \begin{math}
